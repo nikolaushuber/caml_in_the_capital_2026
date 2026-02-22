@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CitC 2026</title>
+		<link rel="icon" type="image/x-icon" href="/images/32x32.ico">
+
+		<link rel="stylesheet" href="reveal.js/dist/reset.css">
+		<link rel="stylesheet" href="reveal.js/dist/reveal.css">
+		<link rel="stylesheet" href="reveal.js/dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="stackoverflow-light.css">
+
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+<section>
+	<p><img width="50%" src="images/cover-image.jpg"></p>
+	<h4>Dynamic Verification of OCaml Software</h4>
+	<p><b>Nikolaus Huber</b></p>
+</section>
+
+<section>
+	<h3>About me</h3>
+	<img class="r-stretch" src="images/about_me_1.png">
+</section>
+<section data-transition="none">
+	<h3>About me</h3>
+	<img class="r-stretch" src="images/about_me_2.png">
+</section>
+<section data-transition="none">
+	<h3>About me</h3>
+	<img class="r-stretch" src="images/about_me_3.png">
+</section>
+<section data-transition="none">
+	<h3>About me</h3>
+	<img class="r-stretch" src="images/about_me_4.png">
+</section>
+<section data-transition="none">
+	<h3>About me</h3>
+	<img class="r-stretch" src="images/about_me_5.png">
+</section>
+<section data-transition="none">
+	<h3>About me</h3>
+	<img class="r-stretch" src="images/about_me_6.png">
+</section>
+
+<section>
+	<div class="contr-box">
+		<div class="contr-paper">
+			<div class="contr-title">Dynamic Verification of OCaml Software with Gospel and Ortac/QCheck-STM</div>
+			<div class="contr-authors"><b>Huber N.</b>, Spargo N., Osborne N., Hym S., Midtgaard J.</div>
+		</div>
+		<div class="contr-badges">
+			<img class="contr-badge" src="images/etaps_reusable.svg">
+			<img class="contr-badge" src="images/etaps_available.svg">
+		</div>
+	</div>
+
+	<div class="artifact-container">
+		<span class="artifact-title">Artifact:</span>
+		<div class="doi-badge">
+			<span class="label">DOI</span>
+			<a class="value" href="https://doi.org/10.5281/zenodo.13988146" target="_blank">10.5281/zenodo.13988146</a>
+		</div>
+	</div>
+</section>
+
+<section>
+	<p><img width="20%" src="images/colour-logo.png"></p>
+	<ul>
+		<li class="fragment fade-up">Functional core</li>
+		<li class="fragment fade-up">Many <em>imperative features</em></li>
+		<ul>
+			<li class="fragment fade-up">References</li>
+			<li class="fragment fade-up">Mutable arrays</li>
+			<li class="fragment fade-up">I/O</li>
+			<li class="fragment fade-up">Exceptions</li>
+		</ul>
+	</ul>
+</section>
+
+<section>
+	<img width="250em" src="images/logo-rocq-orange_blue.png" /><br>
+	<img width="250em" src="images/frama-c.png" /><br>
+	<div style="display:flex; flex-direction: row; justify-content: center; align-items: center; gap: 2%">
+		<img width="50em" src="images/logo-2.png" /> 
+		<p>Infer</p>
+	</div>
+	<p>Astrée</p>
+	<h3>...</h3>
+</section>
+
+<section>
+	<h3>Gospel</h3>
+	<ul>
+		<li>Behavioural specification language</li>
+		<li>Type invariants, function pre/post conditions, mutability, exceptions, ...</li>
+		<li>Tool agnostic</li>
+		<ul>
+			<li>Cameleer</li>
+			<li>Why3gospel</li>
+			<li>ORTAC</li>
+			<li>...</li>
+		</ul>
+	</ul>
+
+	<div height="2em"></div>
+
+	<div class="citation cite">
+		<strong>GOSPEL—Providing OCaml with a Formal Specification Language.</strong><br>
+		Charguéraud, A., Filliâtre, JC., Lourenço, C., Pereira, M.<br>
+		Symposium on Formal Methods (FM) 2019<br>
+		<a href="https://doi.org/10.1007/978-3-030-30942-8_29">https://doi.org/10.1007/978-3-030-30942-8_29</a>
+	</div>
+</section>
+
+<section>
+	<h3 data-id="ortac">ORTAC</h3>
+	<ul>
+		<li class="fragment fade-up"><strong>(O)</strong>Caml <strong>(R)</strong>un<strong>(T)</strong>ime <strong>(A)</strong>ssertion <strong>(C)</strong>hecker</li>
+		<li class="fragment fade-up">Module I/F + GOSPEL => code for testing</li>
+		<li class="fragment fade-up">Plugins</li>
+		<ul>
+			<li class="fragment fade-up">Wrapper</li>
+			<li class="fragment fade-up">Monolith</li>
+			<li class="fragment fade-up">QCheck-STM</li>
+			<li class="fragment fade-up">...</li>
+		</ul>
+	</ul>
+</section>
+
+<section>
+	<h3>QCheck-STM</h3>
+	<ul>
+		<li class="fragment fade-up">QCheck + state</li>
+		<li class="fragment fade-up">black-box, model-based state-machine testing</li>
+	</ul>
+	<div class="r-stretch">
+		<img width="80%" class="fragment fade-up" src="images/stack_pbt_example.excalidraw.svg" />
+	</div>
+</section>
+
+<section>
+	<h3>Stack (Excerpt)</h3>
+	<pre><code data-trim data-noescape data-line-numbers class="language-ocaml">
+		type 'a t
+		
+		exception Empty
+		
+		val create : unit -> 'a t
+		val push : 'a -> 'a t -> unit
+		val pop : 'a t -> 'a
+		val is_empty : 'a t -> bool
+	</code></pre>
+</section>
+
+<section>
+	<pre class="fragment fade-up"><code data-trim data-noescape data-line-numbers class="language-ocaml">
+		type 'a t
+		(*@ mutable model contents : 'a sequence *)
+	</code></pre>
+
+	<pre class="fragment fade-up"><code data-trim data-noescape data-line-numbers data-ln-start-from="6" class="language-ocaml">
+		val create : unit -> 'a t
+		(*@ t = create ()
+			  ensures t.contents = Sequence.empty *)
+	</code></pre>
+
+	<pre class="fragment fade-up"><code data-trim data-noescape data-line-numbers data-ln-start-from="10" class="language-ocaml">
+		val push : 'a -> 'a t -> unit
+		(*@ push v t
+				modifies t.contents
+				ensures t.contents =
+					Sequence.cons v (old t.contents) *)
+	</code></pre>
+
+	<pre class="fragment fade-up"><code data-trim data-noescape data-line-numbers data-ln-start-from="52" class="language-ocaml">
+		val is_empty : 'a t -> bool
+		(*@ b = is_empty t
+				ensures b = match Sequence.length t.contents with
+				  | 0 -> true
+				  | _ -> false *)
+	</code></pre>
+</section>
+
+<section>
+	<h3>Configuration module</h3>
+	<pre class="OCaml"><code data-trim data-noescape data-line-numbers>
+		type sut = char Stack.t
+
+		let init_sut = Stack.create ()
+	</code></pre>
+</section>
+
+<section>
+	<h3>Running Ortac/QCheck-STM</h3>
+	<pre class="fragment fade-up bash"><code data-trim data-noescape>
+		ortac qcheck-stm stack.mli stack_config.ml
+	</code></pre>
+	<ul>
+		<li class="fragment fade-up">Generates code for RAC</li>
+		<li class="fragment fade-up">Needs a few additional libraries to link</li>
+		<ul>
+			<li class="fragment fade-up">dune plugin available</li>
+		</ul>
+		<li class="fragment fade-up">Can be easily integrated into CI</li>
+	</ul>
+</section>
+
+<section>
+	<pre class="fragment fade-up OCaml"><code data-trim data-noescape data-line-numbers>
+		val copy : 'a t -> 'a t
+		(*@ r = copy t
+				ensures r.contents = t.contents *)
+	</code></pre>
+	<pre class="fragment fade-up OCaml"><code data-trim data-noescape data-line-numbers>
+		val transfer : 'a t -> 'a t -> unit
+		(*@ transfer t1 t2
+				modifies t1.contents
+				modifies t2.contents
+				ensures t1.contents = Sequence.empty
+				ensures t2.contents =
+					(old t1.contents) ++ (old t2.contents) *)
+	</code></pre>
+</section>
+
+<section>
+	<h3>Evaluation - Errors/Bugs found</h3>
+</section>
+
+<section>
+	<h3>Hashtbl</h3>
+	<pre class="fragment fade-up OCaml"><code data-trim data-noescape data-line-numbers>
+		val create : ?random:bool -> int -> ('a, 'b) t
+		(** [Hashtbl.create n] creates a new empty hash table with
+			initial size [n]. For best results, [n] should be on the
+			order of the expected number of elements that will be in
+			the table.  The table grows as needed, so [n] is just an
+			initial guess. ... *)
+	</code></pre>
+	<pre class="fragment fade-up OCaml"><code data-trim data-noescape data-line-numbers>
+		type ('a, 'b) t
+		(*@ mutable model contents : ('a * 'b) list *)
+
+		val create : ?random:bool -> int -> ('a, 'b) t
+		(*@ h = create ?random size
+				checks size >= 0
+				ensures h.contents = [] *)
+	</code></pre>
+</section>
+
+<section>
+	<pre><code data-trim data-noescape class="language-text">
+		Gospel specification violation in function create
+
+		File "hashtbl.mli", line 7, characters 11-20:
+			size >= 0
+		when executing the following sequence of operations:
+
+		[@@@ocaml.warning "-8"]
+		open Hashtbl
+		let protect f = try Ok (f ()) with e -> Error e
+		let sut0 = create ~random:false 16
+		let r = protect (fun () -> create ~random:true (-8))
+		assert (match r with
+					| Error (Invalid_argument _) -> true
+					| _ -> false)
+		(* returned Ok (<sut>) *)
+	</code></pre>
+</section>
+
+<section>
+	<h3>Errors found</h3>
+	<ul>
+		<li class="fragment fade-up">Documentation fix</li>
+		<ul>
+			<li class="fragment fade-up"><em>Hashtbl.create</em> (initial size guess can be negative)</li>
+		</ul>
+		<li class="fragment fade-up">2 bugs in <em>Varray</em> library
+		<li class="fragment fade-up">7 bugs in <em>Bitv</em> library</li> 
+		<ul>
+			<li class="fragment fade-up">3 functions with possible integer overflow</li>
+			<li class="fragment fade-up">2 functions with possible division-by-zero</li>
+			<li class="fragment fade-up">2 functions throwing unexpected exceptions</li>
+		</ul>
+		<li class="fragment fade-up">...</li>
+	</ul>
+</section>
+
+<section>
+	<h3>Thank you for listening!</h3>
+	<p>Questions?</p>
+	<div style="height: 4rem;"></div>
+	<p><small><a href="https://github.com/ocaml-gospel/ortac/">https://github.com/ocaml-gospel/ortac/</a></small></p>
+	<p><small>This work was partially funded by <em>ANR grant ANR-22-CE48-0013</em> and <em>Tarides</em>.</small></p>
+</section>
+
+			</div>
+		</div>
+
+		<script src="reveal.js/dist/reveal.js"></script>
+		<script src="reveal.js/plugin/notes/notes.js"></script>
+		<script src="reveal.js/plugin/markdown/markdown.js"></script>
+		<script src="reveal.js/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: "c/t",
+				transition: "fade",
+				controls: false,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
