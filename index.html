@@ -122,6 +122,75 @@
 </section>
 
 <section>
+	<h3>Property-based testing</h3>
+	<ul>
+		<li class="fragment fade-up">Popularised by QuickCheck</li>
+		<li class="fragment fade-up">In OCaml &rarr; <a href="https://github.com/c-cube/qcheck">QCheck</a></li>
+		<li class="fragment fade-up">Property &rarr; bool function</li>
+	</ul>
+	<pre class="fragment fade-up"><code data-trim data-noescape data-line-numbers="|1,2|4-7|6|9" class="language-ocaml">
+		let prop (l : 'a list) : bool = 
+			List.rev (List.rev l) = l 
+		in
+		let test = 
+			QCheck.Test.make 
+				QCheck.(list nat_small) 
+				prop
+		in
+		QCheck.Test.check_exn test
+	</code></pre>
+</section>
+
+<section>
+	<h3>QCheck-STM</h3>
+	<ul>
+		<li class="fragment fade-up">QCheck + state</li>
+		<li class="fragment fade-up">closed-box, model-based state-machine testing</li>
+	</ul>
+	<div class="r-stretch">
+		<img width="80%" class="fragment fade-up" src="images/stack_pbt_example.excalidraw.svg" />
+	</div>
+</section>
+
+<section>
+	<h3>QCheck-STM</h3>
+	<pre><code data-trim data-noescape data-line-numbers="|1,2|4,5|7-9|12-17|19-22|24-27|29-32" class="language-ocaml">
+		type sut = int Stack.t
+		type state = int list
+
+		let init_sut () = Stack.create ()
+		let init_state = []
+
+		type cmd =
+			| Push of int
+			| Pop
+			...
+
+		let arb_cmd (s:state) =
+			... 
+			oneof [
+				map (fun k -> Push k) int;
+				pure Pop;
+				...
+
+		let next_state (c:cmd) (s:state) = match c with
+			| Push i -> i :: s
+			| Pop 	 -> List.tl s
+			...
+
+		let run (c:cmd) (h:sut) = match c with
+			| Push i 	-> Stack.push h i
+			| Pop  		-> Stack.pop h
+			... 
+
+		let postcond (c:cmd) (s:state) (res:res) = ...
+			... 
+			| Pop, r -> r = List.hd s
+			...
+	</code></pre>
+</section>
+
+<section>
 	<h3 data-id="ortac">ORTAC</h3>
 	<ul>
 		<li class="fragment fade-up"><strong>(O)</strong>Caml <strong>(R)</strong>un<strong>(T)</strong>ime <strong>(A)</strong>ssertion <strong>(C)</strong>hecker</li>
@@ -136,16 +205,7 @@
 	</ul>
 </section>
 
-<section>
-	<h3>QCheck-STM</h3>
-	<ul>
-		<li class="fragment fade-up">QCheck + state</li>
-		<li class="fragment fade-up">closed-box, model-based state-machine testing</li>
-	</ul>
-	<div class="r-stretch">
-		<img width="80%" class="fragment fade-up" src="images/stack_pbt_example.excalidraw.svg" />
-	</div>
-</section>
+
 
 <section>
 	<h3>Stack (Excerpt)</h3>
