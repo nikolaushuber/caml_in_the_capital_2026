@@ -100,14 +100,14 @@
 <section>
 	<h3>Gospel</h3>
 	<ul>
-		<li>Behavioural specification language</li>
-		<li>Type invariants, function pre/post conditions, mutability, exceptions, ...</li>
-		<li>Tool agnostic</li>
+		<li class="fragment fade-up" data-fragment-index="1">Behavioural specification language</li>
+		<li class="fragment fade-up" data-fragment-index="2">Type invariants, function pre/post conditions, mutability, exceptions, ...</li>
+		<li class="fragment fade-up" data-fragment-index="3">Tool agnostic</li>
 		<ul>
-			<li>Cameleer</li>
-			<li>Why3gospel</li>
-			<li>ORTAC</li>
-			<li>...</li>
+			<li class="fragment fade-up" data-fragment-index="4">Cameleer</li>
+			<li class="fragment fade-up" data-fragment-index="4">Why3gospel</li>
+			<li class="fragment fade-up" data-fragment-index="4"><em>ORTAC</em></li>
+			<li class="fragment fade-up" data-fragment-index="4">...</li>
 		</ul>
 	</ul>
 
@@ -179,11 +179,11 @@
 			...
 
 		let run (c:cmd) (h:sut) = match c with
-			| Push i 	-> Stack.push h i
-			| Pop  		-> Stack.pop h
+			| Push i 	-> ... Stack.push i h
+			| Pop  		-> ... Stack.pop h
 			... 
 
-		let postcond (c:cmd) (s:state) (res:res) = ...
+		let postcond (c:cmd) (s:state) (r:res) = ...
 			... 
 			| Pop, r -> r = List.hd s
 			...
@@ -193,14 +193,14 @@
 <section>
 	<h3 data-id="ortac">ORTAC</h3>
 	<ul>
-		<li class="fragment fade-up"><strong>(O)</strong>Caml <strong>(R)</strong>un<strong>(T)</strong>ime <strong>(A)</strong>ssertion <strong>(C)</strong>hecker</li>
-		<li class="fragment fade-up">Module I/F + GOSPEL => code for testing</li>
-		<li class="fragment fade-up">Plugins</li>
+		<li class="fragment fade-up" data-fragment-index="1"><strong>(O)</strong>Caml <strong>(R)</strong>un<strong>(T)</strong>ime <strong>(A)</strong>ssertion <strong>(C)</strong>hecker</li>
+		<li class="fragment fade-up" data-fragment-index="2">Module I/F + GOSPEL => code for testing</li>
+		<li class="fragment fade-up" data-fragment-index="3">Plugins</li>
 		<ul>
-			<li class="fragment fade-up">Wrapper</li>
-			<li class="fragment fade-up">Monolith</li>
-			<li class="fragment fade-up">QCheck-STM</li>
-			<li class="fragment fade-up">...</li>
+			<li class="fragment fade-up" data-fragment-index="4">Wrapper</li>
+			<li class="fragment fade-up" data-fragment-index="4">Monolith</li>
+			<li class="fragment fade-up" data-fragment-index="4"><em>QCheck-STM</em></li>
+			<li class="fragment fade-up" data-fragment-index="4">...</li>
 		</ul>
 	</ul>
 </section>
